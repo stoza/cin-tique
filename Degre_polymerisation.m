@@ -1,4 +1,4 @@
-function dpn = Degre_polymerisation(M,parametre)
+function dpn = Degre_polymerisation(M,Htr,parametre)
 %fonction qui calcul le degre de polymerisation
 %   Les parametres de cette fonction sont M qui est la concentration en
 %   monomere et paramtre qui est un string qui nous dis dans quelle cas on
@@ -19,8 +19,8 @@ switch parametre
     case 'trommdorff'
         log_kt = kt_tromdorff(1-M/M0);
         kt = 10.^log_kt;
-        R = sqrt(ri/kt);
-        alpha = kp*R*M./(kp*M*R+kt*R^2);
+        R = sqrt(ri./kt);
+        alpha = kp.*R.*M./(kp.*M.*R+kt.*R.^2);
         dpn = 1./(1-alpha);
     case 'tromvitre'
         log_kt = kt_tromdorff(1-M/M0);
@@ -36,9 +36,9 @@ switch parametre
         log_kp = kp_vitrification(1-M/M0);
         kp = 10.^log_kp;
         kt = 10.^log_kt;
-        ks = Cs.*kp;
+        ks = Cs*kp;
         R = sqrt(ri./kt);
-        alpha = kp.*R.*M./(kp.*R.*M + ks.*R + kt.*R.^2);
+        alpha = kp.*R.*M./(kp.*R.*M + ks.*Htr + kt.*R.^2);
         dpn =1./(1-alpha); 
         
         
