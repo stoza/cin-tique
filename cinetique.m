@@ -53,17 +53,13 @@ figure;
 
 %avec transfert et trommdorf et vitrification et transfert
 [T,C] = ode45(@dm_transfert,tps,[1 10^(-2)]);
-M = C(:,1);
-htr = C(:,2);
+M = C(1:end,1);
+htr = C(1:end,2);
 plot(T/3600,1-C(:,1)/1);
 title('evolution de la [M] avec transfert');
 figure;
 
 dpn = Degre_polymerisation(M,htr,'transfert');
-plot(1-M/1,dpn);
-title('evolution du dpn en fct du taux de convertion agent de transfert cs = 0.66');
-figure;
-
 
 %avec ri non constant et trommdorff et vitrification et epuisement en
 %amorceur
@@ -86,6 +82,7 @@ plot(T/3600,1-C(:,3)/(10^(-3)));
 xlabel('Temps [h]');
 ylabel('Fraction en amorceur convertie');
 figure;
+
 
 
 

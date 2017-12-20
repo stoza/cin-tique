@@ -31,15 +31,23 @@ switch parametre
         alpha = kp.*R.*M./(kp.*M.*R+kt.*R.^2);
         dpn = 1./(1-alpha);
     case 'transfert'
-        Cs = 0.66;
+        Cs = [0.18,0.27,0.63,0.66];
+        for cs = Cs
         log_kt = kt_tromdorff(1-M/M0);
         log_kp = kp_vitrification(1-M/M0);
         kp = 10.^log_kp;
         kt = 10.^log_kt;
-        ks = Cs*kp;
+        ks = cs*kp;
         R = sqrt(ri./kt);
-        alpha = kp.*R.*M./(kp.*R.*M + ks.*Htr + kt.*R.^2);
-        dpn =1./(1-alpha); 
+        alpha = kp.*R.*M./(kp.*R.*M + ks.*R.*Htr + kt.*R.^2);
+        dpn =1./(1-alpha);
+        plot(1-M/M0,dpn);
+        hold on;
+        end
+        legend('0.18','0.27','0.63','0.66');
+        xlabel('taux de conversion du monomère');
+        ylabel('DPn');
+        figure;
         
         
 end
